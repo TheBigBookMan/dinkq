@@ -1,111 +1,220 @@
+/*
+  DinkQ — neon purple theme (Tailwind v4 + shadcn)
+  Dark-only: keep class="dark" on <html> in index.html so shadcn's dark: variants apply.
+
+  NOTE: shadcn commands (init / add) can rewrite the :root block below with its
+  default light theme. If the page suddenly turns white or grey, that is why:
+  put the values in :root back to the ones in this file.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;600&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------- shadcn tokens (dark-only, so everything lives in :root) ---------- */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --radius: 0.75rem;
+  --background: #07040f;
+  --foreground: #f3eeff;
+  --card: #0f0a1f;
+  --card-foreground: #f3eeff;
+  --popover: #130c28;
+  --popover-foreground: #f3eeff;
+  --primary: #b14dff;
+  --primary-foreground: #0b0418;
+  --secondary: #1d1340;
+  --secondary-foreground: #e6dcff;
+  --muted: #160f2e;
+  --muted-foreground: #9d8fc9;
+  --accent: #2a1a5e;
+  --accent-foreground: #f3eeff;
+  --destructive: #ff4d6d;
+  --border: #2a1d52;
+  --input: #2a1d52;
+  --ring: #b14dff;
+  --chart-1: #b14dff;
+  --chart-2: #ff3ec9;
+  --chart-3: #3de6ff;
+  --chart-4: #ffb43d;
+  --chart-5: #d6a8ff;
+  --sidebar: #0b0618;
+  --sidebar-foreground: #f3eeff;
+  --sidebar-primary: #b14dff;
+  --sidebar-primary-foreground: #0b0418;
+  --sidebar-accent: #2a1a5e;
+  --sidebar-accent-foreground: #f3eeff;
+  --sidebar-border: #2a1d52;
+  --sidebar-ring: #b14dff;
+}
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+}
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ---------- DinkQ neon palette, fonts, glows, motion ---------- */
+@theme {
+  --color-neon-violet: #b14dff;
+  --color-neon-violet-soft: #d6a8ff;
+  --color-neon-violet-deep: #6a1fd0;
+  --color-neon-magenta: #ff3ec9;
+  --color-neon-cyan: #3de6ff;
+  --color-neon-amber: #ffb43d;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --color-surface: #0f0a1f;
+  --color-raised: #1a1236;
+  --color-line: #2a1d52;
+  --color-ink-muted: #9d8fc9;
+
+  /* Chakra Petch has Thai glyphs, so headings stay on-brand in the Thai UI */
+  --font-display: "Chakra Petch", "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-neon-sm: 0 0 6px rgb(177 77 255 / 0.55), 0 0 14px rgb(177 77 255 / 0.25);
+  --shadow-neon: 0 0 8px rgb(177 77 255 / 0.6), 0 0 24px rgb(177 77 255 / 0.35),
+    0 0 48px rgb(177 77 255 / 0.15);
+  --shadow-neon-lg: 0 0 12px rgb(177 77 255 / 0.7), 0 0 36px rgb(177 77 255 / 0.45),
+    0 0 80px rgb(177 77 255 / 0.25);
+  --shadow-neon-magenta: 0 0 8px rgb(255 62 201 / 0.6), 0 0 24px rgb(255 62 201 / 0.3);
+  --shadow-neon-cyan: 0 0 8px rgb(61 230 255 / 0.6), 0 0 24px rgb(61 230 255 / 0.3);
+
+  --animate-neon-pulse: neon-pulse 2.4s ease-in-out infinite;
+  --animate-neon-flicker: neon-flicker 5s linear infinite;
+
+  @keyframes neon-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  /* for the LIVE badge: mostly steady, with an occasional tube flicker */
+  @keyframes neon-flicker {
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+      opacity: 1;
+    }
+    20%,
+    24%,
+    55% {
+      opacity: 0.55;
+    }
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+/* ---------- Utilities ---------- */
+
+/* Glowing text in whatever colour the text already is: text-neon-violet text-glow */
+@utility text-glow {
+  text-shadow:
+    0 0 6px color-mix(in srgb, currentColor 80%, transparent),
+    0 0 18px color-mix(in srgb, currentColor 50%, transparent),
+    0 0 40px color-mix(in srgb, currentColor 30%, transparent);
+}
+
+/* Faint synthwave grid, for the TV screen background */
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgb(177 77 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(177 77 255 / 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* The main panel look: court cards, standings, stat tiles */
+@utility neon-card {
+  background: linear-gradient(160deg, rgb(26 18 54 / 0.9), rgb(15 10 31 / 0.9));
+  border: 1px solid rgb(177 77 255 / 0.35);
+  border-radius: var(--radius);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 0 6px rgb(177 77 255 / 0.35),
+    0 0 14px rgb(177 77 255 / 0.15);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    color-scheme: dark;
+    @apply font-sans;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply text-foreground;
+    background-color: var(--background);
+    background-image:
+      radial-gradient(60rem 30rem at 50% -10%, rgb(177 77 255 / 0.22), transparent 70%),
+      radial-gradient(40rem 25rem at 100% 100%, rgb(255 62 201 / 0.1), transparent 70%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+
+  ::selection {
+    background: rgb(177 77 255 / 0.4);
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
