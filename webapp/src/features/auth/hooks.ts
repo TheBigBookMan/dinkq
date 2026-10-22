@@ -1,8 +1,8 @@
-import type { UserData, UserType } from "../types/user";
+import type { UserData, UserType } from "./types";
 
 export const useSession = () => {
   // temp mock
-  const isPending: boolean = true;
+  const isPending: boolean = false;
   const isError: boolean = false;
   const userType: UserType = "GUEST";
   const userData: UserData = {
@@ -15,6 +15,6 @@ export const useSession = () => {
     isPending,
     isError,
     userType,
-    userData
+    userData: {}
   }
 }

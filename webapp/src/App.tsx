@@ -1,14 +1,25 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
-import ProtectedRoute from './components/layout/ProtectedRouter';
+import ProtectedRouter from './components/layout/ProtectedRouter';
+import OrganiserPage from './pages/OrganiserPage';
 
+// TODO need to sort out the requireAuth for players logging in as guest and stuff where no auth required
 const router = createBrowserRouter([
   {
-    element: <ProtectedRoute requireAuth={false} />,
+    element: <ProtectedRouter requireAuth={false} />,
     children: [
       {
         path: '/login', 
         element: <Login />
+      }
+    ]
+  },
+  {
+    element: <ProtectedRouter requireAuth={true} />,
+    children: [
+      {
+        path: '/organiser',
+        element: <OrganiserPage />
       }
     ]
   },
