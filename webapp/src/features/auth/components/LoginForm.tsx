@@ -1,6 +1,6 @@
-import { Label } from '../../ui/label';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
+import { Label } from '../../../components/ui/label';
+import { Button } from '../../../components/ui/button';
+import { Input } from '../../../components/ui/input';
 import GoogleIcon from '../../../assets/icons/google-icon.svg';
 import LineIcon from '../../../assets/icons/line-icon.svg';
 
