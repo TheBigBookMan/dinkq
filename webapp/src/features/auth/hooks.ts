@@ -8,13 +8,24 @@ export const useSession = () => {
   const userData: UserData = {
     name: "Ben",
     imageURL: "",
-    rating: 3.8
   };
 
   return {
     isPending,
     isError,
     userType,
-    userData: {}
+    userData
+  }
+}
+
+export const useAuth = () => {
+
+  // dummy logout function
+  function logout() {
+    console.log('logout');
+  }
+
+  return {
+    logout
   }
 }
