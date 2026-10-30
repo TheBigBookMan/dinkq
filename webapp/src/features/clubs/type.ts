@@ -1,3 +1,10 @@
+export type NewClubInput = { 
+  clubName: string; 
+  clubIcon?: string; 
+  description?: string; 
+  contactEmail?: string; 
+  contactPhone?: string 
+}
 
 export type Club = {
   clubId: string

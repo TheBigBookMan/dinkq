@@ -6,7 +6,6 @@ import OrganiserLayout from './components/layout/OrganiserLayout';
 import SessionPage from './pages/organiser/SessionPage';
 import NewSessionPage from './pages/organiser/NewSessionPage';
 import ClubPage from './pages/organiser/ClubPage';
-import SessionsPage from './pages/organiser/SessionsPage';
 import PlayerPage from './pages/PlayerPage';
 import ClubLayout from './components/layout/ClubLayout';
 import ClubDetails from './features/clubs/organiser/ClubDetails';

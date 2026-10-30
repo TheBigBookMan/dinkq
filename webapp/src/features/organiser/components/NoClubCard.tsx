@@ -8,7 +8,7 @@ type Props = {
 
 export function NoClubCard({ onCreateClub, className = '' }: Props) {
   return (
-    <section aria-labelledby="club-heading" className={`neon-card flex flex-col gap-5 p-5 sm:p-6 ${className}`}>
+    <section aria-labelledby="club-heading" className={`neon-card flex flex-col gap-5 p-5 m-5 sm:p-6 ${className}`}>
       <div className="min-w-0 space-y-1">
         <p className="text-xs uppercase tracking-wider text-ink-muted">Your club</p>
         <h2 id="club-heading" className="truncate font-display text-xl font-semibold">

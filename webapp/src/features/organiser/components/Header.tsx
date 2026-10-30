@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { LogOutIcon, PlayIcon } from 'lucide-react'
 import { Button } from '../../../components/ui/button'
 import { LiveIndicator } from '../../../components/shared/LiveIndicator'
-import { useMyClubs } from '../../clubs/hooks'
 import { useLogout } from '../../auth/hooks'
 
 const START_TO = '/organiser/sessions/new';
@@ -15,36 +14,36 @@ const bar = 'absolute left-2.5 h-0.5 w-5 rounded-full bg-current transition-all 
 
 interface OrganiserHeaderProps {
   live?: { startedAt: string; to: string } | null;
+  hasClubs: boolean | undefined;
 }
 
-export function Header({ live }: OrganiserHeaderProps) {
+export function Header({ live, hasClubs }: OrganiserHeaderProps) {
   const [open, setOpen] = useState<boolean>(false);
   const logout = useLogout();
   const { pathname } = useLocation();
-  const clubData = useMyClubs();
 
   const NAV = [
     { to: '/organiser', label: 'Home', end: true },
     { to: `/organiser/clubs`, label: 'Clubs' },
     { to: '/organiser/sessions', label: 'Sessions' },
     { to: '/organiser/account', label: 'Account' }
-  ]
+  ];
 
-  useEffect(() => setOpen(false), [pathname])
+  useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
     if (!open) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open])
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   const item = (i: number) => ({
     className: `transition-all duration-300 motion-reduce:transition-none ${
       open ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
     }`,
     style: { transitionDelay: open ? `${100 + i * 60}ms` : '0ms' },
-  })
+  });
 
   return (
     <>
@@ -78,16 +77,18 @@ export function Header({ live }: OrganiserHeaderProps) {
             ))}
           </nav>
 
-          {live ? (
-            <LiveIndicator startedAt={live.startedAt} to={live.to} className="h-9" />
-          ) : (
-            <Button asChild className={`h-9 rounded-lg px-4 ${cta}`}>
+          {hasClubs && 
+            (live ? (
+              <LiveIndicator startedAt={live.startedAt} to={live.to} className="h-9" />
+            ) : (
+              <Button asChild className={`h-9 rounded-lg px-4 ${cta}`}>
               <Link to={START_TO}>
-                <PlayIcon />
-                Start session
+              <PlayIcon />
+              Start session
               </Link>
-            </Button>
-          )}
+              </Button>
+            ))
+          }
 
           <button
             type="button"

@@ -15,16 +15,18 @@ const OrganiserPage = () => {
   const [addOpen, setAddOpen] = useState<boolean>(false);
 
   const { data: clubs, isPending: clubsPending, isError: clubsError } = useMyClubs();
-  const { data: live } = useLiveSession(); // undefined while loading, null when nothing is live
+  const clubList = clubs ?? [];
+  const onCreateClub = () => navigate("/organiser/club/new-club");
+
+  if (clubList.length === 0) return <NoClubCard onCreateClub={onCreateClub} />
+
+  const { data: live } = useLiveSession();
   const { data: recentData } = useSessions({ scope: "recent" });
   const { data: upcomingData } = useSessions({ scope: "upcoming" });
 
-  const clubList = clubs ?? [];
   const recent = recentData?.pages[0].items ?? [];
   // the upcoming scope is sorted soonest-first and also contains postponed sessions
   const upcoming = upcomingData?.pages[0].items.find((s) => s.status === "SCHEDULED") ?? null;
-
-  const onCreateClub = () => navigate("/organiser/club/new-club");
 
   return (
     <div className="space-y-2 px-4 py-2">
@@ -39,8 +41,6 @@ const OrganiserPage = () => {
 
         {clubsPending ? null : clubsError ? (
           <section className="neon-card p-5 text-sm sm:p-6">Couldn't load your clubs.</section>
-        ) : clubList.length === 0 ? (
-          <NoClubCard onCreateClub={onCreateClub} />
         ) : clubList.length === 1 ? (
           <ClubCard
             clubId={clubList[0].clubId}

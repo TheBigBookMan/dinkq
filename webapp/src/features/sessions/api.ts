@@ -24,10 +24,9 @@ export const createSession = async (input: NewSessionInput): Promise<SessionSumm
 };
 
 export const getLiveSession = async (): Promise<LiveSessionStats | null> => {
-  return mockLiveStats; // DUMMY: later, call your API (null when nothing is live)
+  return null;
+  // return mockLiveStats;
 };
-
-// getSessions stays as it was
 
 const PAGE_SIZE = 5 // small on purpose, so you can see "Load more" with the mock data
 const t = (iso: string) => Date.parse(iso)
