@@ -3,12 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { LogOutIcon, PlayIcon } from 'lucide-react'
 import { Button } from '../../../components/ui/button'
 import { LiveIndicator } from '../../../components/shared/LiveIndicator'
-
-const NAV = [
-  { to: '/organiser', label: 'Home', end: true },
-  { to: '/organiser/club', label: 'Club' },
-  { to: '/organiser/sessions', label: 'Sessions' },
-]
+import { useMyClubs } from '../../clubs/hooks'
 
 const START_TO = '/organiser/sessions/new';
 
@@ -24,7 +19,15 @@ interface OrganiserHeaderProps {
 
 export function Header({ onLogout, live }: OrganiserHeaderProps) {
   const [open, setOpen] = useState<boolean>(false)
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
+  const clubData = useMyClubs();
+
+  const NAV = [
+    { to: '/organiser', label: 'Home', end: true },
+    { to: `/organiser/clubs`, label: 'Clubs' },
+    { to: '/organiser/sessions', label: 'Sessions' },
+    { to: '/organiser/account', label: 'Account' }
+  ]
 
   useEffect(() => setOpen(false), [pathname])
 

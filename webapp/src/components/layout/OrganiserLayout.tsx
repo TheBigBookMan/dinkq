@@ -2,24 +2,17 @@ import { Outlet } from "react-router-dom"
 import { Header } from "../../features/organiser/components/Header";
 import { useAuth } from "../../features/auth/hooks";
 import { useLiveSession } from "../../features/sessions/hooks";
-import { formatDuration } from "../../lib/utils";
-import { useNow } from "../../hooks/useNow";
 
 const OrganiserLayout = () => {
-  const {logout} = useAuth();
-  const liveStats = useLiveSession();
-
-  const now = useNow()
-  const running = now - liveStats.startedAt
+  const { logout } = useAuth();
+  const { data: live } = useLiveSession(); // LiveSessionStats | null/undefined when nothing is live
 
   return (
     <div className='min-h-screen flex flex-col'>
-      <Header 
-        live={{
-          startedAt: formatDuration(running), 
-          to: `/organiser/sessions/$liveStats.{sessionId}`
-        }}
-        onLogout={logout} />
+      <Header
+        live={live ? { startedAt: live.startedAt, to: `/organiser/sessions/${live.sessionId}` } : null}
+        onLogout={logout}
+      />
       <Outlet />
     </div>
   )

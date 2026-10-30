@@ -10,7 +10,6 @@ interface ProtectedRouteProps {
 
 const ProtectedRouter = ({requireAuth = true}: ProtectedRouteProps) => {
   const session = useSession();
-  console.log(session);
 
   if (session.isPending) return <PageLoading />
 

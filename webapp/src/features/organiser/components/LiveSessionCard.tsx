@@ -33,8 +33,10 @@ function Stat({ label, value, of, bar, hint }: { label: string; value: number; o
 
 const LiveSessionCard = ({ session: s, className = '' }: { session: LiveSessionStats; className?: string }) => {
   const now = useNow()
-  const running = now - s.startedAt
-  const remaining = s.endsAt - now
+  const start = Date.parse(s.startedAt) // ISO string -> epoch ms
+  const end = Date.parse(s.endsAt)
+  const running = now - start
+  const remaining = end - now
   const over = remaining < 0
 
   return (
@@ -55,11 +57,15 @@ const LiveSessionCard = ({ session: s, className = '' }: { session: LiveSessionS
           asChild
           className="h-9 rounded-lg bg-linear-to-r from-neon-violet to-neon-magenta px-4 font-semibold text-primary-foreground shadow-neon-sm hover:shadow-neon"
         >
-          <Link to={`/organiser/sessions/${s.id}`}>
+          <Link to={`/organiser/sessions/${s.sessionId}`}>
             Open
             <ArrowRightIcon />
           </Link>
         </Button>
+      </div>
+
+      <div className='flex gap-2'>
+        <p className='font-display text-xl font-semibold  text-neon-magenta text-glow'>{s.clubName}</p>
       </div>
 
       {/* Time */}
@@ -78,7 +84,7 @@ const LiveSessionCard = ({ session: s, className = '' }: { session: LiveSessionS
             </p>
           </div>
         </div>
-        <Bar value={ratio(running, s.endsAt - s.startedAt)} className={over ? 'bg-neon-amber' : 'bg-neon-violet'} />
+        <Bar value={ratio(running, end - start)} className={over ? 'bg-neon-amber' : 'bg-neon-violet'} />
       </div>
 
       {/* Counts */}

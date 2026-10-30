@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ChevronRightIcon, UserPlusIcon } from 'lucide-react'
+import { ArrowRightIcon, ChevronRightIcon, UserPlusIcon } from 'lucide-react'
 import { Button } from '../../../components/ui/button'
 
 const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' }) // "today", "yesterday", "3 days ago"
@@ -12,6 +12,7 @@ function daysAgo(value: string | number) {
 }
 
 type ClubCardProps = {
+  clubId: string;
   name: string
   playerCount: number
   newThisMonth?: number
@@ -22,6 +23,7 @@ type ClubCardProps = {
 }
 
 const ClubCard = ({
+  clubId,
   name,
   playerCount,
   newThisMonth = 0,
@@ -35,11 +37,24 @@ const ClubCard = ({
 
   return (
     <section aria-labelledby="club-heading" className={`neon-card flex flex-col gap-5 p-5 sm:p-6 ${className}`}>
-      <div className="space-y-1">
-        <p className="text-xs uppercase tracking-wider text-ink-muted">Your club</p>
-        <h2 id="club-heading" className="font-display text-xl font-semibold">
-          {name}
-        </h2>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 space-y-1">
+          <p className="text-xs uppercase tracking-wider text-ink-muted">Your club</p>
+          <h2 id="club-heading" className="truncate font-display text-xl font-semibold">
+            {name}
+          </h2>
+        </div>
+
+        <Button
+          asChild
+          variant="outline"
+          size="icon"
+          className="shrink-0 rounded-full border-line bg-raised/70 text-neon-violet-soft hover:border-neon-violet/70 hover:bg-raised hover:shadow-neon-sm"
+        >
+          <Link to={`/organiser/club/${clubId}`} aria-label={`Go to ${name} club page`}>
+            <ArrowRightIcon />
+          </Link>
+        </Button>
       </div>
 
       {empty ? (
@@ -81,7 +96,7 @@ const ClubCard = ({
         </Button>
         {!empty && (
           <Button asChild variant="ghost" className="h-10 text-ink-muted">
-            <Link to="/organiser/roster">View roster</Link>
+            <Link to={`/organiser/club/${clubId}?search=view-roster`}>View roster</Link>
           </Button>
         )}
       </div>

@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom'
+import { formatDuration } from '../../lib/utils'
+import { useNow } from '../../hooks/useNow'
 
 type Props = {
-  startedAt: string // epoch ms
+  startedAt: string // ISO string
   to: string // where "resume" goes
   className?: string
 }
 
 export function LiveIndicator({ startedAt, to, className = '' }: Props) {
+  const now = useNow() // ticks every second
+  const elapsed = Math.max(0, now - Date.parse(startedAt)) // NaN if the string is invalid
 
   return (
     <Link
@@ -21,7 +25,7 @@ export function LiveIndicator({ startedAt, to, className = '' }: Props) {
       </span>
       <span className="tracking-widest">LIVE</span>
       <span aria-hidden="true" className="font-medium tabular-nums text-foreground/80">
-        {startedAt}
+        {formatDuration(elapsed)}
       </span>
     </Link>
   )
