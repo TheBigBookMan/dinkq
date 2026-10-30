@@ -4,6 +4,7 @@ import { LogOutIcon, PlayIcon } from 'lucide-react'
 import { Button } from '../../../components/ui/button'
 import { LiveIndicator } from '../../../components/shared/LiveIndicator'
 import { useMyClubs } from '../../clubs/hooks'
+import { useLogout } from '../../auth/hooks'
 
 const START_TO = '/organiser/sessions/new';
 
@@ -13,12 +14,12 @@ const cta =
 const bar = 'absolute left-2.5 h-0.5 w-5 rounded-full bg-current transition-all duration-300 motion-reduce:transition-none'
 
 interface OrganiserHeaderProps {
-  onLogout: () => void;
   live?: { startedAt: string; to: string } | null;
 }
 
-export function Header({ onLogout, live }: OrganiserHeaderProps) {
-  const [open, setOpen] = useState<boolean>(false)
+export function Header({ live }: OrganiserHeaderProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  const logout = useLogout();
   const { pathname } = useLocation();
   const clubData = useMyClubs();
 
@@ -131,9 +132,9 @@ export function Header({ onLogout, live }: OrganiserHeaderProps) {
               ))}
 
               <div {...item(4)} className={`${item(4).className} border-t border-line pt-2`}>
-                <Button variant="ghost" onClick={onLogout} className="h-12 w-full justify-start gap-3 rounded-xl px-4 text-ink-muted">
+                <Button disabled={logout.isPending} variant="ghost" onClick={() => logout.mutate()} className="h-12 w-full justify-start gap-3 rounded-xl px-4 text-ink-muted">
                   <LogOutIcon />
-                  Log out
+                  {logout.isPending ? "Logging out…" : "Log out"}
                 </Button>
               </div>
             </nav>
